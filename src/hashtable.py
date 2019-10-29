@@ -32,7 +32,12 @@ class HashTable:
 
         OPTIONAL STRETCH: Research and implement DJB2
         '''
-        pass
+        n = 5381
+
+        for char in key:
+            n = n * 33 + ord(char)
+
+        return n % 2**64
 
 
     def _hash_mod(self, key):
@@ -53,7 +58,6 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         node = LinkedPair(key, value)
-        # whatever there is  in the bucket right now
         node.next = self.storage[index]
         self.storage[index] = node
 
@@ -85,7 +89,7 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         head = self.storage[index]
-        
+
         while head:
             if head.key == key:
                 return head.value
