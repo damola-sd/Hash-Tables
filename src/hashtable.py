@@ -51,7 +51,11 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        node = LinkedPair(key, value)
+        # whatever there is  in the bucket right now
+        node.next = self.storage[index]
+        self.storage[index] = node
 
 
 
@@ -63,7 +67,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+
+        if self.storage[index] is None:
+            print("Error/Warning: REMOVE")
+            return
+        self.storage[index] = None
 
 
     def retrieve(self, key):
@@ -74,7 +83,15 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        head = self.storage[index]
+        
+        while head:
+            if head.key == key:
+                return head.value
+            head = head.next
+
+        return None
 
 
     def resize(self):
@@ -84,7 +101,8 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        for i in range(self.capacity):
+            self.storage.append(None)
 
 
 
